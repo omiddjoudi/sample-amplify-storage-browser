@@ -14,11 +14,12 @@ import { Bucket } from "aws-cdk-lib/aws-s3";
 //   secondaryStorage
 // });
 
-defineBackend({
-  auth
+const backend = defineBackend({
+	  auth,
 });
 
-const customBucketStack = defineBackend.createStack("custom_bucket_stack");
+
+const customBucketStack = backend.createStack("custom_bucket_stack");
 
 // Import existing bucket
 const bucket1 = Bucket.fromBucketAttributes(customBucketStack, "bucket1", {
@@ -30,7 +31,7 @@ const bucket2 = Bucket.fromBucketAttributes(customBucketStack, "bucket2", {
   region: "eu-west-1"
 });
 
-defineBackend.addOutput({
+backend.addOutput({
 	storage: {
 		buckets: [
 			{
