@@ -33,18 +33,8 @@ const bucket2 = Bucket.fromBucketAttributes(customBucketStack, "bucket2", {
 
 backend.addOutput({
 	storage: {
-		buckets: [
-			{
-				aws_region: bucket1.env.region,
-				bucket_name: bucket1.bucketName,
-				name: bucket1.bucketName
-			},
-			{
-				aws_region: bucket2.env.region,
-				bucket_name: bucket2.bucketName,
-				name: bucket2.bucketName
-			}
-		],
+		aws_region: bucket1.env.region,
+		bucket_name: bucket1.bucketName
 	}
 })
 
