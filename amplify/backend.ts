@@ -34,7 +34,24 @@ const bucket2 = Bucket.fromBucketAttributes(customBucketStack, "bucket2", {
 backend.addOutput({
 	storage: {
 		aws_region: bucket1.env.region,
-		bucket_name: bucket1.bucketName
+		bucket_name: bucket1.bucketName,
+		buckets: [
+			{
+				aws_region: bucket1.env.region,
+			  	bucket_name: bucket1.bucketName,
+				name: bucket1.bucketName,
+				paths: {
+					"public/*": {
+						guest: ["get", "list"],
+						authenticated: ["get", "list", "write", "delete"],
+					},
+					"destination/*": {
+						guest: ["get", "list"],
+						authenticated: ["get", "list", "write", "delete"],
+					}
+				}
+			}
+		]
 	}
 })
 
