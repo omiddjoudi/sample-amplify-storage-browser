@@ -1,5 +1,7 @@
 import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
+import { Bucket } from "aws-cdk-lib/aws-s3";
+
 // import { storage, secondaryStorage } from './storage/resource';
 
 
