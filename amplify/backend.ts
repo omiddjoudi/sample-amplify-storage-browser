@@ -43,15 +43,37 @@ backend.addOutput({
 				paths: {
 					"public/*": {
 						guest: ["get", "list"],
-						authenticated: ["get", "list", "write", "delete"],
-					},
-					"destination/*": {
-						guest: ["get", "list"],
-						authenticated: ["get", "list", "write", "delete"],
+						authenticated: ["get", "list", "write", "delete"]
 					}
 				}
 			}
 		]
 	}
-})
+});
+
+const authPolicy = new Policy(backend.stack, "customBucketAuthPolicy", {
+	statements: [
+		new PolicyStatement({
+			effect: Effect.ALLOW,
+			actions: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+			resources: [`${bucket1.bucketArn}/public/*`,]
+		}),
+		new PolicyStatement({
+			effect: Effect.ALLOW,
+			actions: ["s3:ListBucket"],
+			resources: [
+				`${bucket1.bucketArn}`,
+				`${bucket1.bucketArn}/*`
+			],
+			conditions: {
+				StringLike: {
+					"s3:prefix": ["public/*", "public/"],},
+			},
+		}),
+	],
+});
+
+// Add the policies to the authenticated user role
+backend.auth.resources.authenticatedUserIamRole.attachInlinePolicy(authPolicy);
+
 
