@@ -18,7 +18,7 @@ defineBackend({
   auth
 });
 
-const customBucketStack = backend.createStack("custom_bucket_stack");
+const customBucketStack = defineBackend.createStack("custom_bucket_stack");
 
 // Import existing bucket
 const bucket1 = Bucket.fromBucketAttributes(customBucketStack, "bucket1", {
@@ -30,7 +30,7 @@ const bucket2 = Bucket.fromBucketAttributes(customBucketStack, "bucket2", {
   region: "eu-west-1"
 });
 
-backend.addOutput({
+defineBackend.addOutput({
 	storage: {
 		buckets: [
 			{
